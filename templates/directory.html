@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Shared Files</title>
+    <!-- description from https://www.w3schools.com/tags/tag_meta.asp -->
+    <meta name="description" content="Shared Files">
+  </head>
+  <body>
+    <main>
+      <h1>Shared Files</h1>
+      <ul>
+      {% for file in sorted(files, key=get_beautiful_file_name): %}
+          <li><a href="/download/{{ get_file_id(file) }}">{{ get_beautiful_file_name(file) }}</a></li>
+      {% endfor %}
+      </ul>
+    </main>
+  </body>
+</html>
