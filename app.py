@@ -63,7 +63,9 @@ def get_path_from_id(_id):
     if _id in __ID_TO_PATH:
         return __ID_TO_PATH[_id]
     for file in get_all_files():
+#        print(f"?   {get_file_id(file)}\n == {_id} => {get_file_id(file) == _id}")
         if get_file_id(file) == _id:
+            __ID_TO_PATH[file] = _id
             return file
     raise FileNotFoundError(f"Could not find the file with id {_id} - maybe it was removed?")
 
@@ -76,7 +78,6 @@ def get_all_files():
             filepath = os.path.join(dirpath, filename)
             if is_shared(filepath):
                 result.append(filepath[len(SOURCE_DIRECTORY):])
-    result.sort()
     return result
 
 @app.route("/")
