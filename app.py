@@ -87,7 +87,9 @@ def list_directory():
         directory=SOURCE_DIRECTORY,
         get_beautiful_file_name=get_beautiful_file_name,
         get_file_id=get_file_id,
-        sorted=sorted)
+        sorted=sorted,
+        share_string=SHARE_STRING,
+    )
 
 @app.route("/download/<path:_id>")
 def download(_id):

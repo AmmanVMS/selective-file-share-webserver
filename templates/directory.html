@@ -4,10 +4,58 @@
     <title>Shared Files</title>
     <!-- description from https://www.w3schools.com/tags/tag_meta.asp -->
     <meta name="description" content="Shared Files">
+    <style>
+        /* from https://designshack.net/articles/css/5-simple-and-practical-css-list-styles-you-can-copy-and-paste/ */
+        h1 {
+          font: 400 40px/1.5 Helvetica, Verdana, sans-serif;
+          margin: 0;
+          padding: 0;
+        }
+         
+        ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0.5em;
+        }
+        
+        li {
+          font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+          border-bottom: 1px solid #ccc;
+        }
+         
+        li:last-child {
+          border: none;
+        }
+         
+        li a {
+          text-decoration: none;
+          color: #000;
+          display: block;
+         
+          -webkit-transition: font-size 0.3s ease, background-color 0.3s ease;
+          -moz-transition: font-size 0.3s ease, background-color 0.3s ease;
+          -o-transition: font-size 0.3s ease, background-color 0.3s ease;
+          -ms-transition: font-size 0.3s ease, background-color 0.3s ease;
+          transition: font-size 0.3s ease, background-color 0.3s ease;
+        }
+         
+        li a:hover {
+          font-size: 30px;
+          background: #f6f6f6;
+        }
+        
+        main {
+            padding: 0.2em;
+        }
+    </style>
   </head>
   <body>
     <main>
       <h1>Shared Files</h1>
+      <p>
+        If a file or folder has "{{ share_string }}" in it, it will appear here.
+        Rename files to make them available online.
+      </p>
       <ul>
       {% for file in sorted(files, key=get_beautiful_file_name): %}
           <li><a href="/download/{{ get_file_id(file) }}">{{ get_beautiful_file_name(file) }}</a></li>
