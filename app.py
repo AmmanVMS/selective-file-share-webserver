@@ -11,7 +11,7 @@ environment configuration:
   a string that must be in the path (case insensitive) so it is shared
 
 """
-from flask import Flask, render_template, redirect, send_from_directory
+from flask import Flask, render_template, send_from_directory, make_response
 import os
 import sys
 from pprint import pprint
@@ -23,7 +23,7 @@ if len(sys.argv) < 1:
 # configuration
 DEBUG = os.environ.get("APP_DEBUG", "true").lower() == "true"
 PORT = int(os.environ.get("PORT", "5000"))
-SOURCE_DIRECTORY = sys.argv[1] # ends with /
+SOURCE_DIRECTORY = os.environ["SOURCE"] # SOURCE environment variable is required; ends with /
 if not SOURCE_DIRECTORY or SOURCE_DIRECTORY[-1] not in ("/", "\\"):
     SOURCE_DIRECTORY+= "/"
 SHARE_STRING = os.environ.get("APP_SHARED_PATH", ".shared").lower()
@@ -91,7 +91,10 @@ def list_directory():
 @app.route("/download/<path:_id>")
 def download(_id):
     assert not ".." in _id, "The path should be valid!"
-    path = get_path_from_id(_id)
+    try:
+        path = get_path_from_id(_id)
+    except FileNotFoundError:
+        return f"The file with the id \"{_id}\" could not be found on the system.", 404
     return send_from_directory(SOURCE_DIRECTORY, path)
 
 
