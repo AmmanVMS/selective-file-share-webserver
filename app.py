@@ -49,8 +49,8 @@ def get_file_id(path):
     """Return the id for the downloads."""
     if path in __PATH_TO_ID:
         return __PATH_TO_ID[path]
-    path = path.replace("\\", "/").lower()
-    i1 = path.find(SHARE_STRING)
+    path = path.replace("\\", "/")
+    i1 = path.lower().find(SHARE_STRING)
     i2 = path[:i1].rfind("/")
     _id = path[i2 + 1:]
     __PATH_TO_ID[path] = _id
@@ -61,11 +61,12 @@ def get_file_id(path):
 def get_path_from_id(_id):
     """Return a path beloning to the id"""
     if _id in __ID_TO_PATH:
+        print(f"found: {_id} == {__ID_TO_PATH[_id]}")
         return __ID_TO_PATH[_id]
     for file in get_all_files():
-#        print(f"?   {get_file_id(file)}\n == {_id} => {get_file_id(file) == _id}")
+        print(f"?   '{get_file_id(file)}'\n == '{_id}' => '{get_file_id(file) == _id}'")
         if get_file_id(file) == _id:
-            __ID_TO_PATH[file] = _id
+            __ID_TO_PATH[_id] = file
             return file
     raise FileNotFoundError(f"Could not find the file with id {_id} - maybe it was removed?")
 
@@ -82,8 +83,10 @@ def get_all_files():
 
 @app.route("/")
 def list_directory():
+    files = get_all_files()
+    files.sort(key=lambda p: get_beautiful_file_name(p).lower())
     return render_template("directory.html",
-        files=get_all_files(),
+        files=files,
         directory=SOURCE_DIRECTORY,
         get_beautiful_file_name=get_beautiful_file_name,
         get_file_id=get_file_id,
@@ -94,6 +97,7 @@ def list_directory():
 @app.route("/download/<path:_id>")
 def download(_id):
     assert not ".." in _id, "The path should be valid!"
+    print(f"_id = {_id}")
     try:
         path = get_path_from_id(_id)
     except FileNotFoundError:
