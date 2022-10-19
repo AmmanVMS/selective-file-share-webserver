@@ -26,7 +26,7 @@ You need
 You can run the app for a specific folder, e.g. `./test`:
 
 ```
-SOURCE=./test py3/bin/gunicorn -w 4 -b "0.0.0.0:5000" app:app
+SOURCE=./test venv/bin/gunicorn -w 4 -b "0.0.0.0:5000" app:app
 ```
 
 Then, you can head over to [localhost:5000](http://localhost:5000) to see it!
@@ -40,7 +40,7 @@ export PORT=5000
 export APP_SHARED_PATH=shared
 export SOURCE=./test
 SOURCE=./test
-py3/bin/gunicorn -w 4 -b "0.0.0.0:5000" app:app
+venv/bin/gunicorn -w 4 -b "0.0.0.0:5000" app:app
 ```
 
 ## Update
