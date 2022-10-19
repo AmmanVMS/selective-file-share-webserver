@@ -15,6 +15,7 @@ from flask import Flask, render_template, redirect, send_from_directory
 import os
 import sys
 from pprint import pprint
+import traceback
 
 if len(sys.argv) < 1:
     print(__doc__)
@@ -96,5 +97,8 @@ def download(_id):
 
 
 if __name__ == "__main__":
-    pprint(get_all_files())
+    try:
+        pprint(get_all_files())
+    except:
+        traceback.print_exc()
     app.run(debug=DEBUG, host="0.0.0.0", port=PORT)
