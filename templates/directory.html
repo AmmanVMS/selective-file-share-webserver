@@ -57,7 +57,7 @@
         Rename files to make them available online.
       </p>
       <ul>
-      {% for file in sorted(files, key=get_beautiful_file_name): %}
+      {% for file in files: %}
           <li><a href="/download/{{ get_file_id(file) }}">{{ get_beautiful_file_name(file) }}</a></li>
       {% endfor %}
       </ul>
